@@ -29,7 +29,8 @@ type IPCClient struct {
     client     *http.Client
     queue      chan *IPCRequest
     wg         sync.WaitGroup
-    stop       chan struct{}
+    mu         sync.Mutex
+    closed     bool
     maxWorkers int
 }
 
@@ -38,7 +39,6 @@ func NewIPCClient(baseURL string) *IPCClient {
         baseURL:    baseURL,
         client:     &http.Client{Timeout: 5 * time.Second},
         queue:      make(chan *IPCRequest, 1024),
-        stop:       make(chan struct{}),
         maxWorkers: 4,
     }
 }
@@ -56,12 +56,35 @@ func (c *IPCClient) Start() {
 
 // Stop signals workers to finish and waits for them.
 func (c *IPCClient) Stop() {
-    close(c.stop)
+    // Close the queue to stop accepting new requests and let workers drain it.
+    c.mu.Lock()
+    if c.closed {
+        c.mu.Unlock()
+        return
+    }
+    c.closed = true
+    close(c.queue)
+    c.mu.Unlock()
     c.wg.Wait()
 }
 
 // Enqueue submits a request to the background queue. Returns an error if the queue is full.
-func (c *IPCClient) Enqueue(req *IPCRequest) error {
+func (c *IPCClient) Enqueue(req *IPCRequest) (err error) {
+    c.mu.Lock()
+    if c.closed {
+        c.mu.Unlock()
+        return errors.New("ipc client stopped")
+    }
+    c.mu.Unlock()
+
+    // If the queue is closed right after the check above, a send will panic.
+    // Recover and return a friendly error instead.
+    defer func() {
+        if r := recover(); r != nil {
+            err = errors.New("ipc client stopped")
+        }
+    }()
+
     select {
     case c.queue <- req:
         return nil
@@ -97,13 +120,14 @@ func (c *IPCClient) Get(path string, timeout time.Duration) ([]byte, error) {
 }
 
 func (c *IPCClient) workerLoop() {
-    for {
-        select {
-        case <-c.stop:
-            return
-        case req := <-c.queue:
-            c.handleWithRetry(req)
+    // Range over the queue channel so workers process all queued requests
+    // until the channel is closed by Stop(). This ensures graceful shutdown
+    // with no abrupt return.
+    for req := range c.queue {
+        if req == nil {
+            continue
         }
+        c.handleWithRetry(req)
     }
 }
 
@@ -160,3 +184,4 @@ func randFloat() float64 {
     return float64(time.Now().UnixNano()%1000) / 1000.0
 }
 
+ 
