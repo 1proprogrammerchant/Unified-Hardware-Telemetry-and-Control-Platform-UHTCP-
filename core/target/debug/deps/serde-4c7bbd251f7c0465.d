@@ -1,0 +1,14 @@
+/mnt/c/Users/wwwte/OneDrive/Pictures/Documents/UHTCP/core/target/debug/deps/serde-4c7bbd251f7c0465.d: /home/wwwte/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/serde-1.0.228/src/lib.rs /home/wwwte/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/serde-1.0.228/src/integer128.rs /home/wwwte/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/serde-1.0.228/src/private/mod.rs /home/wwwte/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/serde-1.0.228/src/private/de.rs /home/wwwte/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/serde-1.0.228/src/private/ser.rs /mnt/c/Users/wwwte/OneDrive/Pictures/Documents/UHTCP/core/target/debug/build/serde-77bdd74bab5807b0/out/private.rs
+
+/mnt/c/Users/wwwte/OneDrive/Pictures/Documents/UHTCP/core/target/debug/deps/libserde-4c7bbd251f7c0465.rlib: /home/wwwte/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/serde-1.0.228/src/lib.rs /home/wwwte/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/serde-1.0.228/src/integer128.rs /home/wwwte/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/serde-1.0.228/src/private/mod.rs /home/wwwte/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/serde-1.0.228/src/private/de.rs /home/wwwte/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/serde-1.0.228/src/private/ser.rs /mnt/c/Users/wwwte/OneDrive/Pictures/Documents/UHTCP/core/target/debug/build/serde-77bdd74bab5807b0/out/private.rs
+
+/mnt/c/Users/wwwte/OneDrive/Pictures/Documents/UHTCP/core/target/debug/deps/libserde-4c7bbd251f7c0465.rmeta: /home/wwwte/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/serde-1.0.228/src/lib.rs /home/wwwte/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/serde-1.0.228/src/integer128.rs /home/wwwte/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/serde-1.0.228/src/private/mod.rs /home/wwwte/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/serde-1.0.228/src/private/de.rs /home/wwwte/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/serde-1.0.228/src/private/ser.rs /mnt/c/Users/wwwte/OneDrive/Pictures/Documents/UHTCP/core/target/debug/build/serde-77bdd74bab5807b0/out/private.rs
+
+/home/wwwte/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/serde-1.0.228/src/lib.rs:
+/home/wwwte/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/serde-1.0.228/src/integer128.rs:
+/home/wwwte/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/serde-1.0.228/src/private/mod.rs:
+/home/wwwte/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/serde-1.0.228/src/private/de.rs:
+/home/wwwte/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/serde-1.0.228/src/private/ser.rs:
+/mnt/c/Users/wwwte/OneDrive/Pictures/Documents/UHTCP/core/target/debug/build/serde-77bdd74bab5807b0/out/private.rs:
+
+# env-dep:OUT_DIR=/mnt/c/Users/wwwte/OneDrive/Pictures/Documents/UHTCP/core/target/debug/build/serde-77bdd74bab5807b0/out

@@ -1,0 +1,51 @@
+name: CI
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  go-build:
+    name: Go build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Set up Go
+        uses: actions/setup-go@v4
+        with:
+          go-version: '1.20'
+      - name: Go modules
+        run: |
+          cd server
+          go mod tidy
+      - name: Build Go server
+        run: |
+          cd server
+          go build ./...
+
+  rust-core:
+    name: Rust core build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install Rust (nightly)
+        uses: actions-rs/toolchain@v1
+        with:
+          toolchain: nightly
+          override: true
+      - name: Cargo build core
+        run: |
+          cargo +nightly build --manifest-path core/Cargo.toml --verbose
+
+  cpp-control:
+    name: C++ control build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install build tools
+        run: sudo apt-get update && sudo apt-get install -y build-essential cmake
+      - name: Build control demo
+        run: |
+          make -C control demo

@@ -1,0 +1,24 @@
+# Go
+**/vendor/
+*.exe
+*.test
+
+# Rust
+/target/
+**/*.rs.bk
+
+# Build outputs
+/build/
+/out/
+
+# Node
+node_modules/
+
+# Editor
+.vscode/
+.idea/
+*.swp
+.DS_Store
+
+# Binaries
+server/bin/

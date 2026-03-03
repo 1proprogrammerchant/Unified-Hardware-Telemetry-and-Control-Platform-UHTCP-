@@ -1,0 +1,6 @@
+{
+  "devices": [
+    { "id": 1, "name": "CPU Sensor", "type": "temperature" },
+    { "id": 2, "name": "Fan", "type": "actuator" }
+  ]
+}

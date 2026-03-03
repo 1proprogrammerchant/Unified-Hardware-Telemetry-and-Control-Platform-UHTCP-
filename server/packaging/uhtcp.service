@@ -1,0 +1,13 @@
+[Unit]
+Description=UHTCP Server
+After=network.target
+
+[Service]
+Type=simple
+ExecStart=/opt/uhtcp/bin/uhtcp-server --config /opt/uhtcp/etc/default.yaml
+Restart=on-failure
+RestartSec=5s
+User=root
+
+[Install]
+WantedBy=multi-user.target

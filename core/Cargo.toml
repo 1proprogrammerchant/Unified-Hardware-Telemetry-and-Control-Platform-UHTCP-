@@ -1,0 +1,13 @@
+[package]
+name = "uhtcp-core"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+serde = { version = "1.0", features = ["derive"] }
+serde_json = "1.0"
+memmap2 = "0.5"
+tiny_http = "0.11"
+
+[build-dependencies]
+cc = "1.0"
