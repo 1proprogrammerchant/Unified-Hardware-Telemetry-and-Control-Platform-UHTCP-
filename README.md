@@ -1,4 +1,4 @@
-# UHTCP — Unified Hardware Telemetry and Control Platform
+# UHTCP - Unified Hardware Telemetry and Control Platform
 
 Repository scaffold with minimal examples across languages:
 
@@ -58,3 +58,4 @@ Notes:
 Publishing
 - To publish this repository on GitHub: create a new empty repo on GitHub, add it as `origin`, and push the `main` branch. See `CONTRIBUTING.md` for one-line commands.
 - A CI workflow is included at `.github/workflows/ci.yml` which builds the Go server, the Rust core (nightly), and the C++ control demo on Linux runners.
+
