@@ -2,6 +2,7 @@ FROM golang:1.23-alpine AS build
 RUN apk add --no-cache git ca-certificates
 WORKDIR /src
 COPY . /src
+RUN go mod tidy
 RUN CGO_ENABLED=0 GOOS=linux go build -ldflags='-s -w' -o /out/uhtcp-server ./cmd/server
 
 FROM alpine:3.18
