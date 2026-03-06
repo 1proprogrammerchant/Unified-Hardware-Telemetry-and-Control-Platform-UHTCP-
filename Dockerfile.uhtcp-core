@@ -1,4 +1,4 @@
-FROM rust:1.78-bullseye AS builder
+FROM rust:nightly-bullseye AS builder
 WORKDIR /usr/src/core
 COPY core/ ./
 RUN apt-get update && apt-get install -y pkg-config libssl-dev ca-certificates build-essential && rm -rf /var/lib/apt/lists/*
