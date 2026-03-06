@@ -11,6 +11,7 @@ int hal_gpio_init(void) {
 
 int hal_gpio_read(uint32_t pin, uint32_t* out) {
     if (!out) return -1;
+    (void)pin; /* pin is unused in this simple implementation */
     *out = _gpio_state;
     return 0;
 }

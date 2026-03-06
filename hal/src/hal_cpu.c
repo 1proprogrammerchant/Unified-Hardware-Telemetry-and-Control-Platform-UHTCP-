@@ -1,3 +1,6 @@
+#ifndef _POSIX_C_SOURCE
+#define _POSIX_C_SOURCE 200809L
+#endif
 #include "../include/hal_cpu.h"
 #include <stdio.h>
 #include <time.h>

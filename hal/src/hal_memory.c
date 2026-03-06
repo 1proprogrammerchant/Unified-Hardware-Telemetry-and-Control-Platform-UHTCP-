@@ -1,6 +1,7 @@
 #include "../include/hal_memory.h"
 #include <stdint.h>
 #include <stdio.h>
+#include <string.h>
 
 int hal_memory_stats(uint64_t* total, uint64_t* free) {
     if (!total || !free) return -1;

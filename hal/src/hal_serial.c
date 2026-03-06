@@ -5,6 +5,7 @@
 #include <string.h>
 
 int hal_serial_open(const char* path, int baud) {
+    (void)baud; /* baud currently unused; placeholder for future config */
     int fd = open(path, O_RDWR | O_NOCTTY | O_SYNC);
     if (fd < 0) return -1;
     // minimal configuration omitted for brevity

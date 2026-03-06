@@ -1,0 +1,7 @@
+digraph ChantLogo {
+  graph [rankdir=LR, bgcolor=transparent];
+  node [shape=none, margin=0, imagescale=true];
+  /* reference the SVG logo placed alongside this DOT file */
+  /* Use the embedded SVG (self-contained) by default. */
+  logo [label="", image="chant_embedded.svg", width=6, height=3];
+}

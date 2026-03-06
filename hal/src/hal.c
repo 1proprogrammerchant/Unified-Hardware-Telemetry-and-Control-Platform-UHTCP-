@@ -1,6 +1,6 @@
 #include "../include/hal.h"
-#include "hal_gpio.h"
-#include "hal_cpu.h"
+#include "../include/hal_gpio.h"
+#include "../include/hal_cpu.h"
 #include <stdio.h>
 
 int hal_init(void) {
