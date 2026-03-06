@@ -37,6 +37,8 @@ jobs:
           file: ./server/docker/Dockerfile
           platforms: linux/amd64,linux/arm64
           push: true
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
           tags: |
             ghcr.io/${{ github.repository_owner }}/uhtcp-server:${{ github.ref_name != '' && github.ref_name || github.sha }}
           labels: |
@@ -53,6 +55,8 @@ jobs:
           file: ./Dockerfile.uhtcp-core
           platforms: linux/amd64,linux/arm64
           push: true
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
           tags: |
             ghcr.io/${{ github.repository_owner }}/uhtcp-core:${{ github.ref_name != '' && github.ref_name || github.sha }}
           labels: |
@@ -66,31 +70,6 @@ jobs:
         run: |
           echo "Pushed uhtcp-server and uhtcp-core images"
 
-      - name: Build and push uhtcp-core (multi-arch)
-        env:
-          IMAGE_CORE_NAME: ghcr.io/${{ github.repository_owner }}/uhtcp-core
-          TAG: ${{ github.ref_name != '' && github.ref_name || github.sha }}
-        run: |
-          docker buildx create --use --bootstrap
-          cat > Dockerfile.uhtcp-core <<'EOF'
-          FROM rust:1.70-slim AS builder
-          RUN apt-get update && apt-get install -y build-essential pkg-config libssl-dev ca-certificates
-          WORKDIR /usr/src/uhtcp
-          COPY core/ /usr/src/uhtcp/
-          RUN cargo build --release --manifest-path /usr/src/uhtcp/Cargo.toml
-
-          FROM debian:bookworm-slim
-          RUN apt-get update && apt-get install -y ca-certificates && rm -rf /var/lib/apt/lists/*
-          COPY --from=builder /usr/src/uhtcp/target/release/uhtcp-core /usr/local/bin/uhtcp-core
-          ENTRYPOINT ["/usr/local/bin/uhtcp-core"]
-          EOF
-
-          docker buildx build \
-            --platform linux/amd64,linux/arm64 \
-            -f Dockerfile.uhtcp-core \
-            -t "$IMAGE_CORE_NAME:$TAG" \
-            --push .
-
-      - name: Verify pushed core image
-        run: |
-          echo "Pushed $IMAGE_CORE_NAME:$TAG"
+      # The previous inline Dockerfile build used an older Rust image
+      # and caused edition parsing failures. The repository's
+      # `Dockerfile.uhtcp-core` is used above with `docker/build-push-action`.
