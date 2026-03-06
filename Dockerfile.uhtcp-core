@@ -8,8 +8,9 @@ RUN /usr/local/cargo/bin/rustup default nightly
 RUN /usr/local/cargo/bin/cargo install cargo-chef --locked
 
 WORKDIR /usr/src/core
-# Prepare recipe (uses only manifest files to compute deps)
-COPY core/Cargo.toml core/Cargo.lock ./
+# Prepare recipe (needs crate sources for build.rs and path deps)
+COPY core/ ./
+COPY hal/ /usr/src/hal
 RUN /usr/local/cargo/bin/cargo chef prepare --recipe-path recipe.json
 
 FROM base AS chef-cook
@@ -17,7 +18,8 @@ WORKDIR /usr/src/core
 COPY . ./
 COPY hal/ /usr/src/hal
 COPY --from=base /usr/local/cargo/bin/cargo-chef /usr/local/cargo/bin/cargo-chef
-	COPY core/recipe.json recipe.json
+RUN /usr/local/cargo/bin/cargo chef cook --release --recipe-path recipe.json
+COPY core/recipe.json recipe.json
 RUN /usr/local/cargo/bin/cargo chef cook --release --recipe-path recipe.json
 
 FROM base AS builder
@@ -28,7 +30,7 @@ COPY --from=chef-cook /usr/src/core/target target
 RUN RUSTC_WRAPPER= /usr/local/cargo/bin/cargo build --release --manifest-path /usr/src/core/Cargo.toml
 RUN mkdir -p /out && cp target/release/uhtcp-core /out/uhtcp-core || true
 
-FROM alpine:3.18
-RUN apk add --no-cache ca-certificates
+FROM debian:bookworm-slim
+RUN apt-get update && apt-get install -y --no-install-recommends ca-certificates && rm -rf /var/lib/apt/lists/*
 COPY --from=builder /out/uhtcp-core /usr/local/bin/uhtcp-core
 ENTRYPOINT ["/usr/local/bin/uhtcp-core"]
