@@ -1,0 +1,11 @@
+FROM rust:1.70 AS builder
+WORKDIR /usr/src/core
+COPY core/ ./
+RUN apt-get update && apt-get install -y pkg-config libssl-dev ca-certificates build-essential && rm -rf /var/lib/apt/lists/*
+RUN cargo build --release
+RUN mkdir -p /out && cp target/release/uhtcp-core /out/uhtcp-core || true
+
+FROM alpine:3.18
+RUN apk add --no-cache ca-certificates
+COPY --from=builder /out/uhtcp-core /usr/local/bin/uhtcp-core
+ENTRYPOINT ["/usr/local/bin/uhtcp-core"]
