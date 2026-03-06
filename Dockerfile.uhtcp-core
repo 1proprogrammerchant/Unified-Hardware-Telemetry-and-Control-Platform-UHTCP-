@@ -17,7 +17,7 @@ WORKDIR /usr/src/core
 COPY . ./
 COPY hal/ /usr/src/hal
 COPY --from=base /usr/local/cargo/bin/cargo-chef /usr/local/cargo/bin/cargo-chef
-COPY recipe.json recipe.json
+	COPY core/recipe.json recipe.json
 RUN /usr/local/cargo/bin/cargo chef cook --release --recipe-path recipe.json
 
 FROM base AS builder
