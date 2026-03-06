@@ -31,21 +31,40 @@ jobs:
           password: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Build and push uhtcp-server (multi-arch)
-        working-directory: ./server
-        env:
-          IMAGE_NAME: ghcr.io/${{ github.repository_owner }}/uhtcp-server
-          TAG: ${{ github.ref_name != '' && github.ref_name || github.sha }}
-        run: |
-          docker buildx create --use --bootstrap
-          docker buildx build \
-            --platform linux/amd64,linux/arm64 \
-            -f docker/Dockerfile \
-            -t "$IMAGE_NAME:$TAG" \
-            --push .
+        uses: docker/build-push-action@v4
+        with:
+          context: ./server
+          file: ./server/docker/Dockerfile
+          platforms: linux/amd64,linux/arm64
+          push: true
+          tags: |
+            ghcr.io/${{ github.repository_owner }}/uhtcp-server:${{ github.ref_name != '' && github.ref_name || github.sha }}
+          labels: |
+            org.opencontainers.image.source=https://github.com/${{ github.repository }}
+            org.opencontainers.image.description=UHTCP server multi-arch image
+            org.opencontainers.image.licenses=MIT
+          outputs: |
+            type=image,name=server,annotation-index.org.opencontainers.image.description=UHTCP server multi-arch image
 
-      - name: Verify pushed image
+      - name: Build and push uhtcp-core (multi-arch)
+        uses: docker/build-push-action@v4
+        with:
+          context: .
+          file: ./Dockerfile.uhtcp-core
+          platforms: linux/amd64,linux/arm64
+          push: true
+          tags: |
+            ghcr.io/${{ github.repository_owner }}/uhtcp-core:${{ github.ref_name != '' && github.ref_name || github.sha }}
+          labels: |
+            org.opencontainers.image.source=https://github.com/${{ github.repository }}
+            org.opencontainers.image.description=UHTCP core runtime multi-arch image
+            org.opencontainers.image.licenses=MIT
+          outputs: |
+            type=image,name=core,annotation-index.org.opencontainers.image.description=UHTCP core multi-arch image
+
+      - name: Verify pushed images
         run: |
-          echo "Pushed $IMAGE_NAME:$TAG"
+          echo "Pushed uhtcp-server and uhtcp-core images"
 
       - name: Build and push uhtcp-core (multi-arch)
         env:
