@@ -1,5 +1,5 @@
 [build]
-rustc-wrapper = "sccache"
+# rustc-wrapper removed to avoid requiring sccache in CI environments
 
 [term]
 verbose = true
