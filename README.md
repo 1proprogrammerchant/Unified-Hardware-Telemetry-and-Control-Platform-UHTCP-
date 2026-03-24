@@ -53,7 +53,7 @@ ruby automation/scripts.rb
 Notes:
 
 - Many examples read Linux `/sys` thermal files; adapt for your platform.
-- This scaffold is a starting point — integrate FFI, messaging, and packaging next.
+- This scaffold is a starting point - integrate FFI, messaging, and packaging next.
 
 Publishing
 - To publish this repository on GitHub: create a new empty repo on GitHub, add it as `origin`, and push the `main` branch. See `CONTRIBUTING.md` for one-line commands.
