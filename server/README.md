@@ -11,9 +11,9 @@ go run ./cmd/server
 ```
 
 Endpoints:
-- `GET /api/v1/health` — proxies the core `/health` endpoint
-- `GET /metrics` — Prometheus metrics endpoint
-- `GET /ws` — websocket upgrade (hub broadcasts received messages)
+- `GET /api/v1/health` - proxies the core `/health` endpoint
+- `GET /metrics` - Prometheus metrics endpoint
+- `GET /ws` - websocket upgrade (hub broadcasts received messages)
 
 Notes:
 - This is a scaffold: the `internal.IPCClient` is a synchronous client today. Async queueing and retries can be added to `internal/ipc_client.go`.
